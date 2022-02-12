@@ -23,7 +23,7 @@ public class Carrier {
     @SequenceGenerator(
             name = "carriers_gen",
             sequenceName="carriers_seq",
-            allocationSize=1)
+            allocationSize = 1)
     @Column(name = "carrier_id")
     private Long id;
 
