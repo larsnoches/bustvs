@@ -22,16 +22,15 @@ public class SeatState {
     @SequenceGenerator(
             name = "seats_states_gen",
             sequenceName="seats_states_seq",
-            allocationSize=1)
-    @Column(name = "seat_state_id")
+            allocationSize = 1)
+    @Column(name = "seat_state_id", nullable = false)
     private Long id;
 
-    @NotNull(message = "Name isn't set")
     @NotBlank(message = "Name cannot be empty")
     @Size(
             min = 2,
             max = 255,
             message = "Name must be between 2 and 255 characters")
-    @Column(name = "seat_state_name", length = 255)
+    @Column(name = "seat_state_name", length = 255, nullable = false)
     private String name;
 }

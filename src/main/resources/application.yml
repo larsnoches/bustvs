@@ -1,10 +1,13 @@
 server:
   port: ${SERVER_PORT:8080}
-  servlet:
-    context-path: "/api"
+#  servlet:
+#    context-path: "/api"
 
 spring:
   application.name: ${APPLICATION_NAME:bus-tvm}
+  data:
+    rest:
+      base-path: /api
   # Database connection settings
   datasource:
     username: what
