@@ -34,15 +34,14 @@ public class Carrier {
     private String name;
 
     @NotNull(message = "INN isn't set")
-//    @Digits(
-//            integer = 12,
-//            fraction = 0,
-//            message = "Wrong INN is set"
-//    )
-    @Min(value = 100000, message = "INN must be more")
-//    @Max(value = 999999999, message = "INN must be less than 14")
-    @Column(name = "carrier_inn", nullable = false)
-    private Integer inn;
+    @Size(
+            min = 6,
+            max = 16,
+            message = "Wrong size of INN"
+    )
+    @Column(name = "carrier_inn", length = 24, nullable = false)
+    @Pattern(regexp = "^[0-9]{1,16}$") // digits in a string
+    private String inn;
 
     @NotBlank(message = "Address cannot be empty")
     @Size(
