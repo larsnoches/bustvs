@@ -61,12 +61,13 @@ public class Bus {
     @NotBlank(message = "Reg number cannot be empty")
     @Size(
             min = 4,
-            max = 12,
-            message = "Reg number must be between 4 and 12 characters")
+            max = 16,
+            message = "Reg number must be between 4 and 16 characters")
     @Column(name = "bus_reg_number", length = 50, nullable = false)
     private String regNumber;
 
-    @NotNull(message = "Carrier isn't set")
-    @Column(name = "carrier_id", nullable = false)
-    private Long carrierId;
+//    @NotNull(message = "Carrier isn't set")
+    @ManyToOne
+    @JoinColumn(name = "carrier_id", nullable = false)
+    private Carrier carrier;
 }

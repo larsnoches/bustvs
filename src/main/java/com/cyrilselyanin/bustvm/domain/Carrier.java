@@ -5,12 +5,12 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "carriers")
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Getter
 @Setter
 public class Carrier {
@@ -33,7 +33,7 @@ public class Carrier {
     @Column(name = "carrier_name", length = 255, nullable = false)
     private String name;
 
-    @NotNull(message = "INN isn't set")
+    @NotBlank(message = "INN isn't set")
     @Size(
             min = 6,
             max = 16,
@@ -50,4 +50,7 @@ public class Carrier {
             message = "Address must be between 7 and 255 characters")
     @Column(name = "carrier_address", length = 255, nullable = false)
     private String address;
+
+    @OneToMany(mappedBy = "carrier")
+    private Set<Bus> buses;
 }
