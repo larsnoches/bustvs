@@ -1,9 +1,6 @@
 package com.cyrilselyanin.bustvm.config;
 
-import com.cyrilselyanin.bustvm.domain.Bus;
-import com.cyrilselyanin.bustvm.domain.BusPointType;
-import com.cyrilselyanin.bustvm.domain.Carrier;
-import com.cyrilselyanin.bustvm.domain.SeatState;
+import com.cyrilselyanin.bustvm.domain.*;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.stereotype.Component;
@@ -20,7 +17,8 @@ public class RestConfig implements RepositoryRestConfigurer {
                 SeatState.class,
                 Carrier.class,
                 Bus.class,
-                BusPointType.class
+                BusPointType.class,
+                Fare.class
         );
     }
 }

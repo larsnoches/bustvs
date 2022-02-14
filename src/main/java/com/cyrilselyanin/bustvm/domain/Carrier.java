@@ -53,4 +53,7 @@ public class Carrier {
 
     @OneToMany(mappedBy = "carrier")
     private Set<Bus> buses;
+
+    @OneToMany(mappedBy = "carrier")
+    private Set<Fare> fares;
 }
