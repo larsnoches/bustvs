@@ -4,26 +4,27 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "seats_states")
+@Table(name = "buspoints_types")
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Getter
 @Setter
-public class SeatState {
+public class BusPointType {
     @Id
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "seats_states_gen")
+            generator = "buspoints_types_gen"
+    )
     @SequenceGenerator(
-            name = "seats_states_gen",
-            sequenceName = "seats_states_seq",
-            allocationSize = 1)
-    @Column(name = "seat_state_id", nullable = false)
+            name = "buspoints_types_gen",
+            sequenceName = "buspoints_types_seq",
+            allocationSize = 1
+    )
+    @Column(name = "buspoint_type_id", nullable = false)
     private Long id;
 
     @NotBlank(message = "Name cannot be empty")
@@ -31,6 +32,6 @@ public class SeatState {
             min = 2,
             max = 255,
             message = "Name must be between 2 and 255 characters")
-    @Column(name = "seat_state_name", length = 255, nullable = false)
+    @Column(name = "buspoint_type_name", nullable = false)
     private String name;
 }

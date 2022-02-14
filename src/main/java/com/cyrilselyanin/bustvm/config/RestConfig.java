@@ -1,6 +1,7 @@
 package com.cyrilselyanin.bustvm.config;
 
 import com.cyrilselyanin.bustvm.domain.Bus;
+import com.cyrilselyanin.bustvm.domain.BusPointType;
 import com.cyrilselyanin.bustvm.domain.Carrier;
 import com.cyrilselyanin.bustvm.domain.SeatState;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -18,7 +19,8 @@ public class RestConfig implements RepositoryRestConfigurer {
         config.exposeIdsFor(
                 SeatState.class,
                 Carrier.class,
-                Bus.class
+                Bus.class,
+                BusPointType.class
         );
     }
 }
