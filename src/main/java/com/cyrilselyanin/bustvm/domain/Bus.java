@@ -66,7 +66,7 @@ public class Bus {
     @Column(name = "bus_reg_number", length = 50, nullable = false)
     private String regNumber;
 
-//    @NotNull(message = "Carrier isn't set")
+    @NotNull(message = "Carrier isn't set")
     @ManyToOne
     @JoinColumn(name = "carrier_id", nullable = false)
     private Carrier carrier;

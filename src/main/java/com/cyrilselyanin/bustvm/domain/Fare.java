@@ -44,6 +44,7 @@ public class Fare {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
+    @NotNull(message = "Carrier isn't set")
     @ManyToOne
     @JoinColumn(name = "carrier_id", nullable = false)
     private Carrier carrier;

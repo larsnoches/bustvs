@@ -5,12 +5,12 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 @Table(name = "buspoints_types")
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Getter
 @Setter
 public class BusPointType {
@@ -34,4 +34,7 @@ public class BusPointType {
             message = "Name must be between 2 and 255 characters")
     @Column(name = "buspoint_type_name", nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "busPointType")
+    private Set<BusPoint> busPoints;
 }
