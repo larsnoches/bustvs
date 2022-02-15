@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 @Table(name = "buspoints")
@@ -48,4 +49,10 @@ public class BusPoint {
     @ManyToOne
     @JoinColumn(name = "buspoint_type_id", nullable = false)
     private BusPointType busPointType;
+
+    @OneToMany(mappedBy = "departureBusPoint")
+    private Set<BusTrip> departureBusTrips;
+
+    @OneToMany(mappedBy = "arrivalBusPoint")
+    private Set<BusTrip> arrivalBusTrips;
 }

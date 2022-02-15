@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Entity
 @Table(name = "fares")
@@ -15,7 +16,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Fare {
     @Id
     @GeneratedValue(
@@ -48,4 +48,7 @@ public class Fare {
     @ManyToOne
     @JoinColumn(name = "carrier_id", nullable = false)
     private Carrier carrier;
+
+    @OneToMany(mappedBy = "fare")
+    private Set<BusTrip> busTrips;
 }

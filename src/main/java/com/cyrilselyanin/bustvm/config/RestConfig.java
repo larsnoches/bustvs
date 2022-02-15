@@ -19,7 +19,8 @@ public class RestConfig implements RepositoryRestConfigurer {
                 Bus.class,
                 BusPointType.class,
                 Fare.class,
-                BusPoint.class
+                BusPoint.class,
+                BusTrip.class
         );
     }
 }

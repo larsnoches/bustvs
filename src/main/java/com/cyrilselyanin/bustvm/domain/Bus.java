@@ -4,12 +4,12 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "buses")
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Getter
 @Setter
 public class Bus {
@@ -70,4 +70,7 @@ public class Bus {
     @ManyToOne
     @JoinColumn(name = "carrier_id", nullable = false)
     private Carrier carrier;
+
+    @OneToMany(mappedBy = "bus")
+    private Set<BusTrip> busTrips;
 }
