@@ -6,12 +6,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Entity
 @Table(name = "seats_states")
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Getter
 @Setter
 public class SeatState {
@@ -33,4 +33,7 @@ public class SeatState {
             message = "Name must be between 2 and 255 characters")
     @Column(name = "seat_state_name", length = 255, nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "seatState")
+    private Set<Seat> seats;
 }

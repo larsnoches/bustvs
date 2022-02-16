@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
 @Table(name = "bustrips")
@@ -13,7 +14,6 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 public class BusTrip {
     @Id
     @GeneratedValue(
@@ -72,4 +72,7 @@ public class BusTrip {
     @ManyToOne
     @JoinColumn(name = "fare_id", nullable = false)
     private Fare fare;
+
+    @OneToMany(mappedBy = "busTrip")
+    private Set<Seat> seats;
 }
