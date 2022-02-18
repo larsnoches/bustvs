@@ -75,4 +75,7 @@ public class BusTrip {
 
     @OneToMany(mappedBy = "busTrip")
     private Set<Seat> seats;
+
+    @OneToMany(mappedBy = "busTrip")
+    private Set<Ticket> tickets;
 }
