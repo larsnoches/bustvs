@@ -1,6 +1,6 @@
 package com.cyrilselyanin.bustvm.domain;
 
-import com.cyrilselyanin.bustvm.validation.ValidateBeforeDate;
+import com.cyrilselyanin.bustvm.validation.beforedate.ValidateBeforeDate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

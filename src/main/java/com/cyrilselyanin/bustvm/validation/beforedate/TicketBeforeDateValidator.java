@@ -1,4 +1,4 @@
-package com.cyrilselyanin.bustvm.validation;
+package com.cyrilselyanin.bustvm.validation.beforedate;
 
 import com.cyrilselyanin.bustvm.domain.Ticket;
 

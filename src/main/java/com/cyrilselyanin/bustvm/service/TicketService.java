@@ -1,15 +1,16 @@
 package com.cyrilselyanin.bustvm.service;
 
-import com.cyrilselyanin.bustvm.repository.TicketRepository;
-import org.springframework.stereotype.Service;
+import com.cyrilselyanin.bustvm.domain.BusTrip;
+import com.cyrilselyanin.bustvm.domain.Ticket;
 
-@Service
-public class TicketService {
-    private final TicketRepository ticketRepository;
+import java.util.List;
+import java.util.Optional;
 
-    public TicketService(TicketRepository ticketRepository) {
-        this.ticketRepository = ticketRepository;
-    }
-
-
+public interface TicketService {
+    Ticket create(Ticket ticket);
+    Optional<Ticket> getTicketById(Long id);
+    List<Ticket> getAllTickets();
+    Ticket update(Ticket ticket, Long id);
+    void delete(Long id);
+    Optional<BusTrip> getTicketBusTrip(Long ticketId);
 }
