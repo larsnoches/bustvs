@@ -48,7 +48,7 @@ public class TicketServiceImpl implements TicketService {
                    t.setBusRouteNumber(ticket.getBusRouteNumber());
                    t.setQrCode(ticket.getQrCode());
                    t.setSeatName(ticket.getSeatName());
-                   t.setName(ticket.getName());
+                   t.setCarrierName(ticket.getCarrierName());
                    t.setDepartureBuspointName(ticket.getDepartureBuspointName());
                    t.setArrivalBuspointName(ticket.getArrivalBuspointName());
                    t.setDepartureDateTime(ticket.getDepartureDateTime());

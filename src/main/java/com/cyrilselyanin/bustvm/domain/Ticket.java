@@ -1,6 +1,6 @@
 package com.cyrilselyanin.bustvm.domain;
 
-import com.cyrilselyanin.bustvm.validation.beforedate.ValidateBeforeDate;
+import com.cyrilselyanin.bustvm.validation.beforedate.TicketValidateBeforeDate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +17,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Getter
 @Setter
+@TicketValidateBeforeDate
 public class Ticket {
     @Id
     @GeneratedValue(
@@ -30,7 +31,7 @@ public class Ticket {
     private Long id;
 
     @NotNull(message = "Issue date time isn't set")
-    @Future
+    @FutureOrPresent
     @Column(name = "issue_datetime", nullable = false)
     private Timestamp issueDateTime;
 
@@ -88,7 +89,7 @@ public class Ticket {
             max = 255,
             message = "Name must be between 2 and 255 characters")
     @Column(name = "carrier_name", length = 255, nullable = false)
-    private String name;
+    private String carrierName;
 
     @NotBlank(message = "Departure bus point name cannot be empty")
     @Size(
@@ -108,7 +109,6 @@ public class Ticket {
 
     @NotNull(message = "Departure date time isn't set")
     @Future
-    @ValidateBeforeDate
     @Column(name = "departure_datetime", nullable = false)
     private Timestamp departureDateTime;
 

@@ -7,7 +7,6 @@ import com.cyrilselyanin.bustvm.domain.BusTrip;
 import com.cyrilselyanin.bustvm.domain.Ticket;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.hateoas.server.SimpleRepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 

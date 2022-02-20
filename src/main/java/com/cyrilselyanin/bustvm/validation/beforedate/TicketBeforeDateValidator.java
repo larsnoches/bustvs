@@ -5,10 +5,10 @@ import com.cyrilselyanin.bustvm.domain.Ticket;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class TicketBeforeDateValidator implements ConstraintValidator<ValidateBeforeDate, Ticket> {
+public class TicketBeforeDateValidator implements ConstraintValidator<TicketValidateBeforeDate, Ticket> {
 
     @Override
-    public void initialize(ValidateBeforeDate constraintAnnotation) {
+    public void initialize(TicketValidateBeforeDate constraintAnnotation) {
     }
 
     @Override
