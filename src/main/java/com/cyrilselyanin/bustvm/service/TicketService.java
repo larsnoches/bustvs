@@ -8,11 +8,12 @@ import java.util.Optional;
 
 public interface TicketService {
     Ticket create(Ticket ticket);
-    Optional<Ticket> getTicketById(Long id);
-    Optional<Ticket> getTicketByIdForUser(Long ticketId, String userId);
+
+    Optional<Ticket> getTicket(Long ticketId);
     List<Ticket> getAllTickets();
-    List<Ticket> getAllTicketsForUser(String userId);
+
     Ticket update(Ticket ticket, Long id);
     void delete(Long id);
-    Optional<BusTrip> getTicketBusTrip(Long ticketId, String userId);
+
+    Optional<BusTrip> getTicketBusTrip(Long ticketId);
 }

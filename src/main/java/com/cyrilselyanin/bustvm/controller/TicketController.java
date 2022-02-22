@@ -37,15 +37,7 @@ public class TicketController {
 
     @GetMapping("/api/tickets/{id}")
     public ResponseEntity<EntityModel<Ticket>> getTicketById(@PathVariable Long id) {
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userId = authentication.getName();
-        boolean isUser = authentication.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_USER"));
-        boolean isAdmin = authentication.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-
-        if (isUser) {
-            return ticketService.getTicketByIdForUser(id, userId)
+        return ticketService.getTicket(id)
                     .map(ticket -> {
                         EntityModel<Ticket> ticketRepresentation = ticketModelAssembler
                                 .toModel(ticket)
@@ -58,72 +50,22 @@ public class TicketController {
                         return ResponseEntity.ok(ticketRepresentation);
                     })
                     .orElse(ResponseEntity.notFound().build());
-        }
-        if (isAdmin) {
-            return ticketService.getTicketById(id)
-                    .map(ticket -> {
-                        EntityModel<Ticket> ticketRepresentation = ticketModelAssembler
-                                .toModel(ticket)
-                                .add(
-                                        linkTo(
-                                                methodOn(TicketController.class)
-                                                        .getAllTickets()
-                                        ).withRel("tickets")
-                                );
-                        return ResponseEntity.ok(ticketRepresentation);
-                    })
-                    .orElse(ResponseEntity.notFound().build());
-        }
-
-        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/api/tickets")
     public ResponseEntity<CollectionModel<EntityModel<Ticket>>> getAllTickets() {
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userId = authentication.getName();
-        boolean isUser = authentication.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_USER"));
-        boolean isAdmin = authentication.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-
-        if (isAdmin) {
-            return ResponseEntity.ok(
-                    ticketModelAssembler.toCollectionModel(
-                            ticketService.getAllTickets()
-                    )
-            );
-        }
-        if (isUser) {
-            return ResponseEntity.ok(
-                    ticketModelAssembler.toCollectionModel(
-                            ticketService.getAllTicketsForUser(userId)
-                    )
-            );
-        }
-
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(
+                ticketModelAssembler.toCollectionModel(
+                        ticketService.getAllTickets()
+                )
+        );
     }
 
     @GetMapping("/api/tickets/{id}/busTrip")
     public ResponseEntity<EntityModel<BusTrip>> getTicketBusTrip(
             @PathVariable(name = "id") Long ticketId
     ) {
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        StringBuilder sb = new StringBuilder();
-        sb.append("getName: %s\n".formatted(authentication.getName()));
-        sb.append("getAuthorities: %s\n".formatted(authentication.getAuthorities().toString()));
-        sb.append("getCredentials: %s\n".formatted(authentication.getCredentials().toString()));
-        sb.append("getPrincipal: %s\n".formatted(authentication.getPrincipal().toString()));
-        sb.append("getDetails: %s\n".formatted(authentication.getDetails()));
-
-        String userId = authentication.getName();
-        boolean isUser = authentication.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_USER"));
-        boolean isAdmin = authentication.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-
-        return ticketService.getTicketBusTrip(ticketId, userId)
+        return ticketService.getTicketBusTrip(ticketId)
                 .map(busTrip -> {
                     EntityModel<BusTrip> busTripRepresentation = busTripModelAssembler
                             .toModel(busTrip);

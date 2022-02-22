@@ -4,6 +4,8 @@ import com.cyrilselyanin.bustvm.domain.BusTrip;
 import com.cyrilselyanin.bustvm.domain.Ticket;
 import com.cyrilselyanin.bustvm.repository.BusTripRepository;
 import com.cyrilselyanin.bustvm.repository.TicketRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,23 +30,25 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Optional<Ticket> getTicketById(Long id) {
-        return ticketRepository.findById(id);
-    }
+    public Optional<Ticket> getTicket(Long ticketId) {
+        if (isAdmin()) return ticketRepository.findById(ticketId);
+        if (isUser()) {
+            String userId = getUserId();
+            return ticketRepository.findByIdAndUserId(ticketId, userId);
+        }
 
-    @Override
-    public Optional<Ticket> getTicketByIdForUser(Long ticketId, String userId) {
-        return ticketRepository.findByIdAndUserId(ticketId, userId);
+        return Optional.empty();
     }
 
     @Override
     public List<Ticket> getAllTickets() {
-        return ticketRepository.findAll();
-    }
+        if (isAdmin()) return ticketRepository.findAll();
+        if (isUser()) {
+            String userId = getUserId();
+            return ticketRepository.findAllByUserId(userId);
+        }
 
-    @Override
-    public List<Ticket> getAllTicketsForUser(String userId) {
-        return ticketRepository.findAllByUserId(userId);
+        return List.of();
     }
 
     @Override
@@ -80,9 +84,34 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Optional<BusTrip> getTicketBusTrip(Long ticketId, String userId) {
-        return ticketRepository.findByIdAndUserId(ticketId, userId)
-                .map(Ticket::getBusTrip);
+    public Optional<BusTrip> getTicketBusTrip(Long ticketId) {
+        if (isAdmin()) {
+            return ticketRepository.findById(ticketId)
+                    .map(Ticket::getBusTrip);
+        }
+        if (isUser()) {
+            String userId = getUserId();
+            return ticketRepository.findByIdAndUserId(ticketId, userId)
+                    .map(Ticket::getBusTrip);
+        }
+
+        return Optional.empty();
     }
 
+    private boolean isUser() {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_USER"));
+    }
+
+    private String getUserId() {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getName();
+    }
+
+    private boolean isAdmin() {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+    }
 }
