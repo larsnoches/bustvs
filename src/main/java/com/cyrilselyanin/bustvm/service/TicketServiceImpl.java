@@ -33,8 +33,27 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    public Optional<Ticket> getTicketByIdForUser(Long id, String userId) {
+        Optional<Ticket> ticket = ticketRepository.findById(id);
+        if (ticket.isEmpty()) return ticket;
+
+        if (ticket
+                .get()
+                .getUserId()
+                .equals(userId)) {
+            return ticket;
+        }
+        return Optional.empty();
+    }
+
+    @Override
     public List<Ticket> getAllTickets() {
         return ticketRepository.findAll();
+    }
+
+    @Override
+    public List<Ticket> getAllTicketsForUser(String userId) {
+        return ticketRepository.findAllByUserId(userId);
     }
 
     @Override
@@ -70,8 +89,8 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Optional<BusTrip> getTicketBusTrip(Long ticketId) {
-        return ticketRepository.findById(ticketId)
+    public Optional<BusTrip> getTicketBusTrip(Long ticketId, String userId) {
+        return ticketRepository.findByIdAndUserId(ticketId, userId)
                 .map(Ticket::getBusTrip);
     }
 

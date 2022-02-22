@@ -9,6 +9,9 @@ import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,18 +55,50 @@ public class TicketController {
 
     @GetMapping("/api/tickets")
     public ResponseEntity<CollectionModel<EntityModel<Ticket>>> getAllTickets() {
-        return ResponseEntity.ok(
-                ticketModelAssembler.toCollectionModel(
-                        ticketService.getAllTickets()
-                )
-        );
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        boolean isUser = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_USER"));
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        if (isAdmin) {
+            return ResponseEntity.ok(
+                    ticketModelAssembler.toCollectionModel(
+                            ticketService.getAllTickets()
+                    )
+            );
+        }
+        if (isUser) {
+            return ResponseEntity.ok(
+                    ticketModelAssembler.toCollectionModel(
+                            ticketService.getAllTicketsForUser(userId)
+                    )
+            );
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/api/tickets/{id}/busTrip")
     public ResponseEntity<EntityModel<BusTrip>> getTicketBusTrip(
             @PathVariable(name = "id") Long ticketId
     ) {
-        return ticketService.getTicketBusTrip(ticketId)
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        StringBuilder sb = new StringBuilder();
+        sb.append("getName: %s\n".formatted(authentication.getName()));
+        sb.append("getAuthorities: %s\n".formatted(authentication.getAuthorities().toString()));
+        sb.append("getCredentials: %s\n".formatted(authentication.getCredentials().toString()));
+        sb.append("getPrincipal: %s\n".formatted(authentication.getPrincipal().toString()));
+        sb.append("getDetails: %s\n".formatted(authentication.getDetails()));
+
+        String userId = authentication.getName();
+        boolean isUser = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_USER"));
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        return ticketService.getTicketBusTrip(ticketId, userId)
                 .map(busTrip -> {
                     EntityModel<BusTrip> busTripRepresentation = busTripModelAssembler
                             .toModel(busTrip);

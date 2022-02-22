@@ -3,6 +3,12 @@ server:
 #  servlet:
 #    context-path: "/api"
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: mappings
+
 spring:
   application.name: ${APPLICATION_NAME:bus-tvm}
   data:
