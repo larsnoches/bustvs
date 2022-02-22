@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface TicketService {
     Ticket create(Ticket ticket);
     Optional<Ticket> getTicketById(Long id);
-    Optional<Ticket> getTicketByIdForUser(Long id, String userId);
+    Optional<Ticket> getTicketByIdForUser(Long ticketId, String userId);
     List<Ticket> getAllTickets();
     List<Ticket> getAllTicketsForUser(String userId);
     Ticket update(Ticket ticket, Long id);

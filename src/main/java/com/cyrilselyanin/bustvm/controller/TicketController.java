@@ -37,20 +37,45 @@ public class TicketController {
 
     @GetMapping("/api/tickets/{id}")
     public ResponseEntity<EntityModel<Ticket>> getTicketById(@PathVariable Long id) {
-        return ticketService.getTicketById(id)
-                .map(ticket -> {
-                    EntityModel<Ticket> ticketRepresentation = ticketModelAssembler
-                            .toModel(ticket)
-                            .add(
-                                    linkTo(
-                                            methodOn(TicketController.class)
-                                                    .getAllTickets()
-                                    ).withRel("tickets")
-                            );
-                    return ResponseEntity.ok(ticketRepresentation);
-                })
-                .orElse(ResponseEntity.notFound().build());
-//                .orElseThrow(() -> new TicketNotFoundException(id));
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        boolean isUser = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_USER"));
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        if (isUser) {
+            return ticketService.getTicketByIdForUser(id, userId)
+                    .map(ticket -> {
+                        EntityModel<Ticket> ticketRepresentation = ticketModelAssembler
+                                .toModel(ticket)
+                                .add(
+                                        linkTo(
+                                                methodOn(TicketController.class)
+                                                        .getAllTickets()
+                                        ).withRel("tickets")
+                                );
+                        return ResponseEntity.ok(ticketRepresentation);
+                    })
+                    .orElse(ResponseEntity.notFound().build());
+        }
+        if (isAdmin) {
+            return ticketService.getTicketById(id)
+                    .map(ticket -> {
+                        EntityModel<Ticket> ticketRepresentation = ticketModelAssembler
+                                .toModel(ticket)
+                                .add(
+                                        linkTo(
+                                                methodOn(TicketController.class)
+                                                        .getAllTickets()
+                                        ).withRel("tickets")
+                                );
+                        return ResponseEntity.ok(ticketRepresentation);
+                    })
+                    .orElse(ResponseEntity.notFound().build());
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/api/tickets")

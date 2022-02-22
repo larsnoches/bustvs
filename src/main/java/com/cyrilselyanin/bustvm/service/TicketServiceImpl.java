@@ -33,17 +33,8 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Optional<Ticket> getTicketByIdForUser(Long id, String userId) {
-        Optional<Ticket> ticket = ticketRepository.findById(id);
-        if (ticket.isEmpty()) return ticket;
-
-        if (ticket
-                .get()
-                .getUserId()
-                .equals(userId)) {
-            return ticket;
-        }
-        return Optional.empty();
+    public Optional<Ticket> getTicketByIdForUser(Long ticketId, String userId) {
+        return ticketRepository.findByIdAndUserId(ticketId, userId);
     }
 
     @Override
