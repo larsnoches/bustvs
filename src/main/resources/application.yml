@@ -30,12 +30,17 @@ spring:
     properties:
       hibernate:
         default_schema: bus_tvm
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${KEYCLOAK_REALM_CERT_URL:http://192.168.56.104:8180/auth/realms/bustvm_realm/protocol/openid-connect/certs}
 
-keycloak:
-  auth-server-url: http://192.168.56.104:8180/auth
-  realm: bustvm_realm
-  resource: bustvm_client
-  public-client: true
+#keycloak:
+#  auth-server-url: http://192.168.56.104:8180/auth
+#  realm: bustvm_realm
+#  resource: bustvm_client
+#  public-client: true
 
 # Log
 logging:
