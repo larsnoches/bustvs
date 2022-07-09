@@ -1,2 +1,2 @@
-# bustvm
-Bus Tvm system
+# bustvs
+Bus ticket vending system

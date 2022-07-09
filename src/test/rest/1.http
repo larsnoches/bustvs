@@ -1,8 +1,8 @@
 # @name getToken
-POST http://192.168.56.104:8180/auth/realms/bustvm_realm/protocol/openid-connect/token
+POST http://192.168.56.104:8180/auth/realms/bustvs_realm/protocol/openid-connect/token
 Content-Type: application/x-www-form-urlencoded
 
-client_id=bustvm_client&grant_type=password&scope=openid&username=user1&password=user1user1
+client_id=bustvs_client&grant_type=password&scope=openid&username=user1&password=user1user1
 
 ###
 @auth_token = {{getToken.response.body.$.access_token}}
