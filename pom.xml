@@ -11,8 +11,8 @@
 	<groupId>org.cyrilselyanin</groupId>
 	<artifactId>bustvs</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>bus-tvm</name>
-	<description>Bus tvm with Data REST.</description>
+	<name>bus-tvs</name>
+	<description>Bus tvs with Data REST.</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

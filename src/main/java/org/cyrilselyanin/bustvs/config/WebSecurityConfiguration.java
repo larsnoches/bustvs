@@ -69,7 +69,7 @@ public class WebSecurityConfiguration {
                             List.of(
                                     "http://localhost:4200",
                                     "http://192.168.56.1:4200",
-                                    "http://192.168.56.104:8180"
+                                    "http://192.168.56.104:8484"
                             )
                     );
                     corsConfig.setAllowedMethods(

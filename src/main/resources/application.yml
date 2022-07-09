@@ -19,7 +19,7 @@ spring:
     username: what
     password: whatwhat
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://192.168.56.104:5432/bus_system
+    url: jdbc:postgresql://${DB_HOST:localhost}:5432/bus_system
   # JPA
   jpa:
     generate-ddl: true
@@ -34,10 +34,10 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: ${KEYCLOAK_REALM_CERT_URL:http://192.168.56.104:8180/auth/realms/bustvs_realm/protocol/openid-connect/certs}
+          jwk-set-uri: ${KEYCLOAK_REALM_CERT_URL:http://192.168.56.104:8484/auth/realms/bustvs_realm/protocol/openid-connect/certs}
 
 #keycloak:
-#  auth-server-url: http://192.168.56.104:8180/auth
+#  auth-server-url: http://192.168.56.104:8484/auth
 #  realm: bustvs_realm
 #  resource: bustvs_client
 #  public-client: true
