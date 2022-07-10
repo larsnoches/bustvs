@@ -15,13 +15,16 @@ import java.util.Optional;
 public class TicketServiceImpl implements TicketService {
     private final TicketRepository ticketRepository;
     private final BusTripRepository busTripRepository;
+    private final CashRegisterService cashRegisterService;
 
     public TicketServiceImpl(
             TicketRepository ticketRepository,
-            BusTripRepository busTripRepository
+            BusTripRepository busTripRepository,
+            CashRegisterService cashRegisterService
     ) {
         this.ticketRepository = ticketRepository;
         this.busTripRepository = busTripRepository;
+        this.cashRegisterService = cashRegisterService;
     }
 
     @Override
@@ -113,5 +116,14 @@ public class TicketServiceImpl implements TicketService {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+    }
+
+    /**
+     * Reg cash via cashRegister service
+     * @param ticket Ticket instance
+     */
+    @Override
+    public void regCash(Ticket ticket) {
+        cashRegisterService.regCash(ticket);
     }
 }

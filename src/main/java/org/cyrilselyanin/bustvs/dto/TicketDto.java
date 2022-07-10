@@ -3,10 +3,8 @@ package org.cyrilselyanin.bustvs.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+
+import lombok.*;
 
 /**
  * Dto of request to this service in communication between services.
@@ -15,6 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Getter
+@Setter
 public class TicketDto implements Serializable {
     /**
      * Passenger last name

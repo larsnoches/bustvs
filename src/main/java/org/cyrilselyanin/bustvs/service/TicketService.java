@@ -16,4 +16,6 @@ public interface TicketService {
     void delete(Long id);
 
     Optional<BusTrip> getTicketBusTrip(Long ticketId);
+
+    void regCash(Ticket ticket);
 }
