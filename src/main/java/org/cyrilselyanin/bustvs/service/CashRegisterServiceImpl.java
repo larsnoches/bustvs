@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CashRegisterServiceImpl implements CashRegisterService {
-//    private final RabbitTemplate rabbitTemplate;
+    private final RabbitTemplate rabbitTemplate;
 
-//    public CashRegisterServiceImpl(RabbitTemplate rabbitTemplate) {
-//        this.rabbitTemplate = rabbitTemplate;
-//    }
+    public CashRegisterServiceImpl(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
     /**
      * Got ticket, adapt it and send for registering
@@ -26,7 +26,7 @@ public class CashRegisterServiceImpl implements CashRegisterService {
         TicketDtoAdapter ticketDtoAdapter = new TicketDtoAdapter();
         TicketDto ticketDto = ticketDtoAdapter.adapt(ticket);
         // rabbit
-//        rabbitTemplate.convertAndSend(ticketDto);
+        rabbitTemplate.convertAndSend(ticketDto);
     }
 
     /**
